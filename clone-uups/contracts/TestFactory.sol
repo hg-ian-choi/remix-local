@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0 <0.9.0;
 
-import "./IFactory.sol";
+import "./ITest.sol";
 import "@openzeppelin/contracts/proxy/Clones.sol";
 
 contract TestFactory {
@@ -25,9 +25,22 @@ contract TestFactory {
         origin = _origin;
     }
 
-    function clone() external returns (address identicalChild) {
-        identicalChild = origin.clone();
-        IFactory(identicalChild).initialize(msg.sender);
-        emit NewClone(identicalChild, msg.sender);
+    function clone(string memory _name, string memory _symbol)
+        external
+        returns (address newAddress)
+    {
+        newAddress = origin.cloneDeterministic(
+            _getSalt(msg.sender, keccak256(abi.encode(_name, _symbol)))
+        );
+        ITest(newAddress).initialize(_name, _symbol);
+        emit NewClone(newAddress, msg.sender);
+    }
+
+    function _getSalt(address _creator, bytes32 _nonce)
+        private
+        pure
+        returns (bytes32)
+    {
+        return bytes32(uint256(uint160(_creator))) | _nonce;
     }
 }
