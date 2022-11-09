@@ -36,11 +36,11 @@ contract TestFactory {
         emit NewClone(newAddress, msg.sender);
     }
 
-    function _getSalt(address _creator, bytes32 _nonce)
+    function _getSalt(address _owner, bytes32 _nonce)
         private
         pure
         returns (bytes32)
     {
-        return bytes32(uint256(uint160(_creator))) | _nonce;
+        return ((bytes32(uint256(uint160(_owner))) << 128) | (_nonce >> 128));
     }
 }
