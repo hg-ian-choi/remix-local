@@ -1,8 +1,15 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0 <0.9.0;
 
-contract Test2 {
-    function initialize(address _owner, string memory _name) external {
+contract Test3 {
+    // function initialize(address _owner, string memory _name) external {
+    //     require(!isBase, "ERROR: Cannot initialize");
+    //     require(owner == address(0), "ERROR: Contract already initialized");
+    //     owner = _owner;
+    //     name = _name;
+    // }
+
+    function clone(address _owner, string memory _name) external {
         require(!isBase, "ERROR: Cannot initialize");
         require(owner == address(0), "ERROR: Contract already initialized");
         owner = _owner;
@@ -25,6 +32,6 @@ contract Test2 {
     }
 
     function setNum(uint256 _num) external onlyOwner {
-        num = _num - 2;
+        num = _num + 2;
     }
 }

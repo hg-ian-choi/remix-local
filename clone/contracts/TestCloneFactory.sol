@@ -4,7 +4,7 @@ pragma solidity >=0.8.0 <0.9.0;
 import "./ITest.sol";
 import "@openzeppelin/contracts/proxy/Clones.sol";
 
-contract TestFactory {
+contract TestCloneFactory {
     using Clones for address;
 
     address public owner;
@@ -36,10 +36,10 @@ contract TestFactory {
     //     require(instance != address(0), "ERC1167: create failed");
     // }
 
-    function clone() external returns (address identicalChild) {
+    function clone(string memory _name) external returns (address identicalChild) {
         // identicalChild = _clone(_origin);
         identicalChild = origin.clone();
-        ITest(identicalChild).initialize(msg.sender);
+        ITest(identicalChild).initialize(msg.sender, _name);
         emit NewClone(identicalChild, msg.sender);
     }
 }

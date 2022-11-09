@@ -2,15 +2,17 @@
 pragma solidity >=0.8.0 <0.9.0;
 
 contract Test {
-    function initialize(address _owner) external {
+    function initialize(address _owner, string memory _name) external {
         require(!isBase, "ERROR: Cannot initialize");
         require(owner == address(0), "ERROR: Contract already initialized");
         owner = _owner;
+        name = _name;
     }
 
-    uint256 public num;
-    bool public isBase;
     address public owner;
+    bool public isBase;
+    string public name;
+    uint256 public num;
 
     modifier onlyOwner() {
         require(owner == msg.sender, "ERROR: Only Owner");
