@@ -27,19 +27,17 @@ contract TestFactory is Ownable {
         returns (address identicalChild)
     {
         identicalChild = origin.cloneDeterministic(
-            getSalt(_msgSender(), _name, _symbol)
+            getSalt(_msgSender(), keccak256(abi.encode(_name, _symbol)))
         );
         ITest(identicalChild).initialize(payable(_msgSender()));
         emit NewClone(identicalChild, _msgSender());
     }
 
-    function getSalt(
-        address _owner,
-        string memory _name,
-        string memory _symbol
-    ) private pure returns (bytes32) {
-        return
-            bytes32(uint256(uint160(_owner))) |
-            keccak256(abi.encode(_name, _symbol));
+    function getSalt(address _owner, bytes32 _nonce)
+        private
+        pure
+        returns (bytes32)
+    {
+        return ((bytes32(uint256(uint160(_owner))) << 128) | (_nonce >> 128));
     }
 }
