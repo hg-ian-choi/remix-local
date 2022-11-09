@@ -6,7 +6,7 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
 import "./Itest.sol";
 
-contract Test2 is ITest, Initializable {
+contract Test3 is ITest, Initializable {
     function initialize(address _owner, string memory _name)
         public
         override
@@ -37,14 +37,14 @@ contract Test2 is ITest, Initializable {
     }
 
     modifier notClone() {
-        require(!isClone, "Can not clone");
+        require(!isClone && owner == address(0), "Can not clone");
         _;
     }
 
     event SetNum(uint256 _num);
 
     function setNum(uint256 _num) public override {
-        num = _num - 2;
+        num = _num * 2;
     }
 
     function setZero() public onlyOwner {
