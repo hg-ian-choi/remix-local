@@ -5,7 +5,12 @@ import "./Test.sol";
 
 contract Test2 is Test {
     function setNum(uint256 _num) public virtual override {
-        num = _num - 2; 
-        emit SetNum(_num);
+        num = _num - 1;
+        emit SetNum(num);
+    }
+
+    function tenNum() public virtual onlyOwner {
+        num = 10;
+        emit SetNum(num);
     }
 }
