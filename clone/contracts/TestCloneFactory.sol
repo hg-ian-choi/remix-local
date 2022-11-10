@@ -36,10 +36,10 @@ contract TestCloneFactory {
     //     require(instance != address(0), "ERC1167: create failed");
     // }
 
-    function clone(string memory _name) external returns (address identicalChild) {
-        // identicalChild = _clone(_origin);
-        identicalChild = origin.clone();
-        ITest(identicalChild).initialize(msg.sender, _name);
-        emit NewClone(identicalChild, msg.sender);
+    function _clone(string memory _name) external returns (address newAddress) {
+        // newAddress = _clone(_origin);
+        newAddress = origin.clone();
+        ITest(newAddress).initialize(msg.sender, _name);
+        emit NewClone(newAddress, msg.sender);
     }
 }
