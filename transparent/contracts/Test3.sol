@@ -5,7 +5,7 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
 import "./ITest.sol";
 
-contract Test2 is ITest, Initializable {
+contract Test3 is ITest, Initializable {
     function initialize(address _owner, string memory _name)
         public
         override
@@ -15,26 +15,30 @@ contract Test2 is ITest, Initializable {
         name = _name;
     }
 
-    address public owner;
-    string public name;
-    uint256 public num;
-
-    event SetNum(uint256 _num);
-
     modifier onlyOnwer() {
         require(msg.sender == owner, "Only Owner");
         _;
     }
 
-    function setNum(uint256 _num) public {
-        num = _num - 1;
+    uint256 public num;
+    address public owner;
+    string public name;
+
+    event SetNum(uint256 _num);
+
+    function tenNum() public onlyOnwer {
+        num = 10;
+    }
+
+    function hundredNum() public onlyOnwer {
+        num = 100;
     }
 
     function zeroNum() public onlyOnwer {
         num = 0;
     }
 
-    function tenNum() public onlyOnwer {
-        num = 10;
+    function setNum(uint256 _num) public {
+        num = _num * 1;
     }
 }
